@@ -1,51 +1,56 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Corpus</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corpus</title>
+<meta charset="UTF-8">
 
-        <style>
+<style>
 * { font-family: sans-serif; }
-input { width: 100%; }         
-select { width: 100%; }         
+input[type="text"] { width: 100%; }
+select { width: 100%; }
 iframe { width: 100%; }
 iframe img { width: 0; }
-        </style>
-        <script>
-var selectedWord; 
+</style>
+
+<script>
+var selectedWord;
 function searchWord(word){
-    selectedWord = word;
-    var x = new XMLHttpRequest();
-    x.open('get', 'http:/localhost:8421/?word='+word);
-    x.onload = function(){
-        var sel = "";
-        for(var doc of JSON.parse(x.response))
-            sel += '<option value="'+doc.id+'">'+doc.file.replace(/\.html$/, '')+"</option>";
-        document.querySelector('select').innerHTML = sel;
-    }
-    x.send();
-}           
+	selectedWord = word;
+	var x = new XMLHttpRequest();
+	x.open('get', 'http:/localhost:8421/?word='+word);
+	x.onload = function(){
+		var sel = "";
+		for(var doc of JSON.parse(x.response))
+			sel += '<option value="'+doc.id+'">'+doc.file.replace(/\.html$/, '')+"</option>";
+		$('select').innerHTML = sel;
+	}
+	x.send();
+}		   
 function searchDoc(doc){
-    var x = new XMLHttpRequest();
-    x.open('get', 'http:/localhost:8421/?doc='+doc);
-    x.onload = function(){
-        document.querySelector('iframe').src = 'file://'+x.response;
-    }
-    x.send();
+	var x = new XMLHttpRequest();
+	x.open('get', 'http:/localhost:8421/?doc='+encodeURI(doc));
+	x.onload = function(){
+		$('iframe').src = 'file://'+x.response;
+	}
+	x.send();
 }
 function showDoc(){
-    for(var img of document.querySelector('iframe').contentDocument.body.querySelectorAll('img'))
-        img.style.display = 'none';
-    document.querySelector('iframe').contentDocument.body.innerHTML = 
-        document.querySelector('iframe').contentDocument.body.innerHTML
-        .replace(new RegExp('('+selectedWord+')', 'gi'), '<b style="background:yellow">$1</b>');
+	for(var img of $('iframe').contentDocument.body.querySelectorAll('img'))
+		img.style.display = 'none';
+	$('iframe').contentDocument.body.style.fontFamily = 'sans-serif';
+	$('iframe').contentDocument.body.innerHTML = 
+		$('iframe').contentDocument.body.innerHTML
+			.replace(new RegExp('('+selectedWord+')', 'gi'), '<b style="background:yellow">$1</b>');	
 }
-        </script>
-    </head>
-    <body>
-        <input placeholder="word" onkeypress="if(event.keyCode==13) searchWord(this.value)"><br>
-        <select id="docs" size="5" oninput="searchDoc(this.value)"></select>
-        <iframe id="text" style="min-height:98vh" onload="showDoc()"></iframe>
-    </body>
-</html>
+function orthographe(){
+}
+function $(selector){
+	return document.querySelector(selector);
+}
+</script>
+
+<body>
+	<input type="text" placeholder="word" onkeypress="if(event.keyCode==13) searchWord(this.value)"><br>
+	<select id="docs" size="5" oninput="searchDoc(this.value)"></select>
+	<!--label><input id="orthographe" type="checkbox">Orthographe</label-->
+	<iframe id="text" style="min-height:98vh" onload="showDoc()"></iframe>
+</body>
+
