@@ -2,22 +2,21 @@
 <transformation>
   <info>
     <name>05_stemmer</name>
-    <description />
-    <extended_description />
-    <trans_version />
+    <description/>
+    <extended_description/>
+    <trans_version/>
     <trans_type>Normal</trans_type>
-    <trans_status>0</trans_status>
     <directory>/</directory>
     <parameters>
     </parameters>
     <log>
       <trans-log-table>
-        <connection />
-        <schema />
-        <table />
-        <size_limit_lines />
-        <interval />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <size_limit_lines/>
+        <interval/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -42,37 +41,37 @@
           <id>LINES_READ</id>
           <enabled>Y</enabled>
           <name>LINES_READ</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_WRITTEN</id>
           <enabled>Y</enabled>
           <name>LINES_WRITTEN</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_UPDATED</id>
           <enabled>Y</enabled>
           <name>LINES_UPDATED</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_INPUT</id>
           <enabled>Y</enabled>
           <name>LINES_INPUT</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_OUTPUT</id>
           <enabled>Y</enabled>
           <name>LINES_OUTPUT</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_REJECTED</id>
           <enabled>Y</enabled>
           <name>LINES_REJECTED</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>ERRORS</id>
@@ -126,11 +125,11 @@
         </field>
       </trans-log-table>
       <perf-log-table>
-        <connection />
-        <schema />
-        <table />
-        <interval />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <interval/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -208,10 +207,10 @@
         </field>
       </perf-log-table>
       <channel-log-table>
-        <connection />
-        <schema />
-        <table />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -274,10 +273,10 @@
         </field>
       </channel-log-table>
       <step-log-table>
-        <connection />
-        <schema />
-        <table />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -350,10 +349,10 @@
         </field>
       </step-log-table>
       <metrics-log-table>
-        <connection />
-        <schema />
-        <table />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -402,9 +401,9 @@
       </metrics-log-table>
     </log>
     <maxdate>
-      <connection />
-      <table />
-      <field />
+      <connection/>
+      <table/>
+      <field/>
       <offset>0.0</offset>
       <maxdiff>0.0</maxdiff>
     </maxdate>
@@ -415,7 +414,7 @@
     <feedback_shown>Y</feedback_shown>
     <feedback_size>50000</feedback_size>
     <using_thread_priorities>Y</using_thread_priorities>
-    <shared_objects_file />
+    <shared_objects_file/>
     <capture_step_performance>N</capture_step_performance>
     <step_performance_capturing_delay>1000</step_performance_capturing_delay>
     <step_performance_capturing_size_limit>100</step_performance_capturing_size_limit>
@@ -428,10 +427,10 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2019/12/14 12:49:13.896</created_date>
+    <created_date>2019/12/17 10:17:46.047</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2019/12/14 12:49:13.896</modified_date>
-    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
+    <modified_date>2019/12/17 10:17:46.047</modified_date>
+    <key_for_session_key/>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
@@ -439,15 +438,15 @@
   <connection>
     <name>corpus</name>
     <server>localhost</server>
-    <type>MYSQL</type>
+    <type>MSSQLNATIVE</type>
     <access>Native</access>
     <database>corpus</database>
-    <port>3306</port>
-    <username>root</username>
+    <port>1433</port>
+    <username/>
     <password>Encrypted </password>
-    <servername />
-    <data_tablespace />
-    <index_tablespace />
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
     <attributes>
       <attribute>
         <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
@@ -462,8 +461,16 @@
         <attribute>N</attribute>
       </attribute>
       <attribute>
+        <code>MSSQLUseIntegratedSecurity</code>
+        <attribute>true</attribute>
+      </attribute>
+      <attribute>
+        <code>MSSQL_DOUBLE_DECIMAL_SEPARATOR</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
         <code>PORT_NUMBER</code>
-        <attribute>3306</attribute>
+        <attribute>1433</attribute>
       </attribute>
       <attribute>
         <code>PRESERVE_RESERVED_WORD_CASE</code>
@@ -472,10 +479,6 @@
       <attribute>
         <code>QUOTE_ALL_FIELDS</code>
         <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>STREAM_RESULTS</code>
-        <attribute>Y</attribute>
       </attribute>
       <attribute>
         <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
@@ -493,392 +496,56 @@
   </connection>
   <order>
     <hop>
-      <from>Memory Group by</from>
-      <to>stemmer</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Memory Group by</from>
-      <to>stemmer 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>stemmer 2</from>
       <to>Filter rows</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Data Grid</from>
-      <to>Memory Group by</to>
-      <enabled>N</enabled>
+      <from>Table input</from>
+      <to>Stream lookup</to>
+      <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>doc_word</from>
-      <to>Memory Group by</to>
+      <from>Stream lookup</from>
+      <to>stemmer 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>CSV file input</from>
+      <to>Stream lookup</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Filter rows</from>
-      <to>Sort rows</to>
+      <to>Update</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Data Grid</name>
-    <type>DataGrid</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>word</name>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-      <field>
-        <name>rule</name>
-        <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <data>
-      <line>
-        <item>chevaux</item>
-        <item>1</item>
-      </line>
-      <line>
-        <item>traveaux</item>
-        <item>1</item>
-      </line>
-      <line>
-        <item>anneaux</item>
-        <item>2</item>
-      </line>
-      <line>
-        <item>neveux</item>
-        <item>2</item>
-      </line>
-      <line>
-        <item>aulx</item>
-        <item>2</item>
-      </line>
-      <line>
-        <item>peaux</item>
-        <item>3</item>
-      </line>
-      <line>
-        <item>yeux</item>
-        <item>3</item>
-      </line>
-      <line>
-        <item>poux</item>
-        <item>3</item>
-      </line>
-      <line>
-        <item>affreux</item>
-        <item>3</item>
-      </line>
-      <line>
-        <item>autres</item>
-        <item>4</item>
-      </line>
-      <line>
-        <item>investissement</item>
-        <item>5</item>
-      </line>
-      <line>
-        <item>assourdissant</item>
-        <item>6</item>
-      </line>
-      <line>
-        <item>pratiquement</item>
-        <item>7</item>
-      </line>
-      <line>
-        <item>administrativement</item>
-        <item>7</item>
-      </line>
-      <line>
-        <item>justificatrice</item>
-        <item>8</item>
-      </line>
-      <line>
-        <item>justificateur</item>
-        <item>9</item>
-      </line>
-      <line>
-        <item>éducatrice</item>
-        <item>10</item>
-      </line>
-      <line>
-        <item>communicateur</item>
-        <item>11</item>
-      </line>
-      <line>
-        <item>accompagnatrice</item>
-        <item>12</item>
-      </line>
-      <line>
-        <item>administrateur</item>
-        <item>13</item>
-      </line>
-      <line>
-        <item>productrice</item>
-        <item>14</item>
-      </line>
-      <line>
-        <item>matrice</item>
-        <item>14</item>
-      </line>
-      <line>
-        <item>troisième</item>
-        <item>15</item>
-      </line>
-      <line>
-        <item>acheteuse</item>
-        <item>16</item>
-      </line>
-      <line>
-        <item>planteur</item>
-        <item>17</item>
-      </line>
-      <line>
-        <item>poreuse</item>
-        <item>18</item>
-      </line>
-      <line>
-        <item>plieuse</item>
-        <item>18</item>
-      </line>
-      <line>
-        <item>bijoutière</item>
-        <item>19</item>
-      </line>
-      <line>
-        <item>caissière</item>
-        <item>19</item>
-      </line>
-      <line>
-        <item>abrasive</item>
-        <item>20</item>
-      </line>
-      <line>
-        <item>convive</item>
-        <item>20</item>
-      </line>
-      <line>
-        <item>folle</item>
-        <item>21</item>
-      </line>
-      <line>
-        <item>molle</item>
-        <item>21</item>
-      </line>
-      <line>
-        <item>personnelle</item>
-        <item>22</item>
-      </line>
-      <line>
-        <item>personnel</item>
-        <item>23</item>
-      </line>
-      <line>
-        <item>complète</item>
-        <item>24</item>
-      </line>
-      <line>
-        <item>aromatique</item>
-        <item>25</item>
-      </line>
-      <line>
-        <item>faiblesse</item>
-        <item>26</item>
-      </line>
-      <line>
-        <item>patinage</item>
-        <item>27</item>
-      </line>
-      <line>
-        <item>sonorisation</item>
-        <item>28</item>
-      </line>
-      <line>
-        <item>ritualisation</item>
-        <item>28</item>
-      </line>
-      <line>
-        <item>colonisateur</item>
-        <item>29</item>
-      </line>
-      <line>
-        <item>nomination</item>
-        <item>30</item>
-      </line>
-      <line>
-        <item>disposition</item>
-        <item>31</item>
-      </line>
-    </data>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>128</xloc>
-      <yloc>80</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Filter rows</name>
-    <type>FilterRows</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <send_true_to />
-    <send_false_to />
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <leftvalue>word</leftvalue>
-        <function>&lt;></function>
-        <rightvalue>stem</rightvalue>
-      </condition>
-    </compare>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>512</xloc>
-      <yloc>160</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Memory Group by</name>
-    <type>MemoryGroupBy</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <give_back_row>N</give_back_row>
-    <group>
-      <field>
-        <name>word</name>
-      </field>
-    </group>
-    <fields>
-      </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>256</xloc>
-      <yloc>160</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Sort rows</name>
-    <type>SortRows</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory />
-    <compress>N</compress>
-    <compress_variable />
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>len</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>608</xloc>
-      <yloc>160</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>doc_word</name>
+    <name>Table input</name>
     <type>TableInput</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <connection>corpus</connection>
-    <sql>SELECT word
+    <sql>SELECT doc, word
 
 FROM doc_word
 
-WHERE stopword = 'N'</sql>
+WHERE stopword=0 
+</sql>
     <limit>0</limit>
-    <lookup />
+    <lookup/>
     <execute_each_row>N</execute_each_row>
     <variables_active>N</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -886,103 +553,21 @@ WHERE stopword = 'N'</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>128</xloc>
-      <yloc>160</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>stemmer</name>
-    <type>ScriptValueMod</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>/*******************
-
-  Jacques  Savoy, 1999
-
-  For words of five or more letters
-    if the final letter is «-x» 
-      then if final is «-aux» 
-        then replace final «-aux» by «-al»
-        else remove final «-x»
-
-    else (words not ending with «-x»)
-      if final letter is «-s» 
-        then remove final «-s»
-          if final letter is «-r» 
-            then remove final «-r»
-          if final letter is «-e» 
-            then remove final «-e»
-          if final letter is «-é» 
-            then remove final «-é» 
-          if final two letters are the same
-            then remove final letter
-  else 
-    does not alter words of four or less letters
-
-*******************/
-
-var stem = word;
-
-if(word.length>4){
-
-	stem = word
-               .replace(/aux$/, 'al')
-               .replace(/x$/, '')
-               .replace(/s$/, '')
-               .replace(/r$/, '')
-               .replace(/e$/, '')
-               .replace(/é$/, '')
-               .replace(/([a-z])\1+$/, '$1')
-
-}</jsScript_script>
-      </jsScript>
-    </jsScripts>
-    <fields>
-      <field>
-        <name>stem</name>
-        <rename>stem</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>400</xloc>
-      <yloc>80</yloc>
+      <xloc>80</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
     <name>stemmer 2</name>
     <type>ScriptValueMod</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <compatible>N</compatible>
     <optimizationLevel>9</optimizationLevel>
@@ -995,69 +580,93 @@ if(word.length>4){
   Jacques  Savoy, 1999
   http://members.unine.ch/jacques.savoy/clef/frenchStemmerPlus.txt
 
-  erreur :rule	word	stem
-1	traveaux	traveau
-2	aulx	aul
-3	affreux	affreu
-3	yeux	yeu
-14	matrice	mer
-14	productrice	producter
-18	plieuse	plieu-
-18	poreuse	poreu-
-19	abrasive	abrasif
-19	convive	convif
 
-hauteur --> hauter
 
 *******************/
 
 var stem = word;
 
+
 stem = stem
-		   .replace(/([^e])aux$/, '$1al-')  //  1
-           .replace(/aux$/,       'au-')    //  2
-           .replace(/x$/,         '-')      //  3
-           .replace(/s$/,         '-')      //  4
+		   	.replace(/(.[^e])aux$/, '$1al-')  
+           	.replace(/eaux$/,       'eau-')  
+           	.replace(/eux$/,        'eux-')    
+         	.replace(/(.....)x$/,   '$1-')      
+         	.replace(/s$/,         '-')      
 
-           .replace(/issement$/,  'ir-')    //  5
-           .replace(/issant$/,   'ir-')     //  6
-           .replace(/ivement$/,   'if-')    //  7
-           .replace(/ement$/,     'e-')     //  8
-           .replace(/ficatrice$/, 'fier-')  //  9
-           .replace(/catrice$/,   'quer-')  // 10
-           .replace(/cateur$/,    'quer-')  // 11
-           .replace(/atrice$/,    'er-')    // 12
-           .replace(/ateur$/,     'er-')    // 13
-           .replace(/trice$/,     'teur-')  // 14
-           .replace(/ième$/,      '-')      // 15
-           .replace(/teuse$/,     'ter-')   // 16
-           .replace(/teur$/,      'ter-')   // 17
-           .replace(/euse$/,      'eu-')    // 18
-           .replace(/ère$/,       'er-')    // 19
-           .replace(/ive$/,       'if-')    // 20
-           .replace(/olle$/,      'ou-')    // 21
-           .replace(/nelle$/,     'n-')     // 22
-           .replace(/nel$/,       'n-')     // 23
-           .replace(/ète$/,       'et-')    // 24
-           .replace(/ique$/,      '-')      // 25
-           .replace(/esse$/,      'e-')     // 26
-           .replace(/inage$/,     'in-')    // 27
-           .replace(/ualisation$/,'uel-')   // 28
-           .replace(/isation$/,   '-')      // 28
-           .replace(/isateur$/,   '-')      // 28
-           .replace(/ation$/,     '-')      // 29
-           .replace(/ition$/,     '-')      // 30
 
-           .replace(/-$/, '')
+if(!word.match(/-$/))
+	stem = stem.replace(/-$/, '')
 
-/*
-           .replace(/ie$/, '')
-           .replace(/r$/, '')
-           .replace(/e$/, '')
-           .replace(/é$/, '') 
-*/
+           .replace(/issements?$/,  'ir-')    
+           .replace(/issants?$/,   'ir-')     
+           .replace(/ivement$/,   'if-')    
+           .replace(/ements?$/,     'e-')     
+           .replace(/ficatrice$/, 'fier-')  
+	       .replace(/catrices?$/,   'quer-')  
+           .replace(/cateurs?$/,    'quer-')  
+           .replace(/ièmes?$/,      '-')      
 
-var len = word.length;</jsScript_script>
+           .replace(/atrices$/,    'er-')    
+           .replace(/ateurs$/,     'er-')    
+           .replace(/ateurs?-atrices$/, 'teur-') 
+           .replace(/trices?$/,     'ter')  
+           .replace(/teuses?$/,     'ter-')   
+           .replace(/teurs?$/,      'ter-')   
+           .replace(/euses?$/,      'eux')    
+//         .replace(/(.....)ères?$/, '$1er-')
+           .replace(/ives?$/,       'if-')
+           .replace(/(f|m)olles?$/,  '$1ou-')
+           .replace(/nelles?$/,     'n-')
+           .replace(/nels?$/,       'n-')
+           .replace(/(.....)ètes?$/, '$1et-')
+//         .replace(/(.....)iques?$/, '$1-')
+           .replace(/(....)esses?$/,  '$1e-').replace(/hôtesses?$/,'hôte').replace(/vitesses?$/,'vite')
+           .replace(/inages?$/,     'in-')
+           .replace(/ualisations?$/,'uel-')
+           .replace(/isations$/,   '-')
+           .replace(/isateurs?$/,   '-')
+           .replace(/(....)ations?$/,     '$1')
+           .replace(/(...)itions?$/,     '$1')
+  
+if(!word.match(/-$/))
+	stem = stem.replace(/-$/, '')
+
+
+
+stem = stem
+			.replace(/â/g, 'a')
+			.replace(/à/g, 'a')
+			.replace(/á/g, 'a')
+			.replace(/ä/g, 'a')
+			.replace(/ê/g, 'e')
+			.replace(/é/g, 'e')
+			.replace(/è/g, 'e')
+			.replace(/ë/g, 'e')
+			.replace(/î/g, 'i')
+			.replace(/ï/g, 'i')
+			.replace(/ô/g, 'o')
+			.replace(/ö/g, 'o')
+			.replace(/ù/g, 'u')
+			.replace(/û/g, 'u')
+			.replace(/ü/g, 'u')
+			.replace(/ç/g, 'c')
+
+
+stem = stem
+			.replace(/(.)\1/g, '$1')
+
+
+
+stem = stem
+			.replace(/ie$/, '')
+			.replace(/(...)r$/, '$1')
+			.replace(/(...)e$/, '$1')
+			.replace(/(...)é$/, '$1')
+
+if(invariable)
+	stem = invariable
+</jsScript_script>
       </jsScript>
     </jsScripts>
     <fields>
@@ -1069,16 +678,9 @@ var len = word.length;</jsScript_script>
         <precision>-1</precision>
         <replace>N</replace>
       </field>
-      <field>
-        <name>len</name>
-        <rename>len</rename>
-        <type>Integer</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
     </fields>
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -1086,8 +688,187 @@ var len = word.length;</jsScript_script>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>400</xloc>
-      <yloc>160</yloc>
+      <xloc>336</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Filter rows</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to/>
+    <send_false_to/>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>word</leftvalue>
+        <function>&lt;></function>
+        <rightvalue>stem</rightvalue>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>448</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>CSV file input</name>
+    <type>CsvInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <filename>C:\Users\aldebeck\Desktop\corpus\etl\invariables.txt</filename>
+    <filename_field/>
+    <rownum_field/>
+    <include_filename>N</include_filename>
+    <separator>	</separator>
+    <enclosure>"</enclosure>
+    <header>N</header>
+    <buffer_size>50000</buffer_size>
+    <lazy_conversion>N</lazy_conversion>
+    <add_filename_result>N</add_filename_result>
+    <parallel>N</parallel>
+    <newline_possible>N</newline_possible>
+    <encoding>UTF-8</encoding>
+    <fields>
+      <field>
+        <name>invariable</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>208</xloc>
+      <yloc>48</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Stream lookup</name>
+    <type>StreamLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <from>CSV file input</from>
+    <input_sorted>N</input_sorted>
+    <preserve_memory>Y</preserve_memory>
+    <sorted_list>N</sorted_list>
+    <integer_pair>N</integer_pair>
+    <lookup>
+      <key>
+        <name>word</name>
+        <field>invariable</field>
+      </key>
+      <value>
+        <name>invariable</name>
+        <rename>invariable</rename>
+        <default/>
+        <type>String</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>208</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Update</name>
+    <type>Update</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>corpus</connection>
+    <skip_lookup>N</skip_lookup>
+    <commit>100</commit>
+    <use_batch>N</use_batch>
+    <error_ignored>N</error_ignored>
+    <ignore_flag_field/>
+    <lookup>
+      <schema/>
+      <table>doc_word</table>
+      <key>
+        <name>doc</name>
+        <field>doc</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>word</name>
+        <field>word</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>lemme</name>
+        <rename>stem</rename>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>592</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1096,4 +877,5 @@ var len = word.length;</jsScript_script>
   <slave-step-copy-partition-distribution>
   </slave-step-copy-partition-distribution>
   <slave_transformation>N</slave_transformation>
+  <attributes/>
 </transformation>

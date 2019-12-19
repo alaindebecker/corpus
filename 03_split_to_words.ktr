@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>04_stopwords</name>
+    <name>03_split_to_words</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -428,9 +428,9 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2019/12/14 21:07:04.987</created_date>
+    <created_date>2019/12/16 09:13:38.605</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2019/12/14 21:07:04.987</modified_date>
+    <modified_date>2019/12/16 09:13:38.605</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -497,34 +497,64 @@
   </connection>
   <order>
     <hop>
-      <from>doc_word</from>
-      <to>Stream lookup</to>
+      <from>db get html</from>
+      <to>html->text</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>stopwords</from>
-      <to>Stream lookup</to>
+      <from>Split text to char</from>
+      <to>ascii</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Stream lookup</from>
-      <to>Modified Java Script Value</to>
+      <from>ascii</from>
+      <to>Group by char</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Modified Java Script Value</from>
+      <from>Group by char</from>
+      <to>doc_char</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Group by word</from>
+      <to>doc_word</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Split text to word</from>
       <to>Filter rows</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Filter rows</from>
+      <to>Group by word</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>html->text</from>
+      <to>orthographe</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>orthographe</from>
+      <to>Split text to char</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>orthographe</from>
+      <to>Split text to word</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>html->text</from>
       <to>Update</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Modified Java Script Value</name>
-    <type>ScriptValueMod</type>
+    <name>Filter rows</name>
+    <type>FilterRows</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -533,24 +563,80 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>if(stopword != '0')
-	stopword = 1;</jsScript_script>
-      </jsScript>
-    </jsScripts>
+    <send_true_to/>
+    <send_false_to/>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <conditions>
+          <condition>
+            <negated>N</negated>
+            <leftvalue>word</leftvalue>
+            <function>IS NOT NULL</function>
+            <rightvalue/>
+          </condition>
+          <condition>
+            <negated>N</negated>
+            <operator>AND</operator>
+            <leftvalue>word</leftvalue>
+            <function>&lt;></function>
+            <rightvalue/>
+            <value>
+              <name>constant</name>
+              <type>String</type>
+              <text>-</text>
+              <length>-1</length>
+              <precision>-1</precision>
+              <isnull>N</isnull>
+              <mask/>
+            </value>
+          </condition>
+        </conditions>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>608</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Group by char</name>
+    <type>MemoryGroupBy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <give_back_row>N</give_back_row>
+    <group>
+      <field>
+        <name>id</name>
+      </field>
+      <field>
+        <name>ch</name>
+      </field>
+      <field>
+        <name>ascii</name>
+      </field>
+    </group>
     <fields>
       <field>
-        <name>stopword</name>
-        <rename>stopword</rename>
-        <type>Integer</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>Y</replace>
+        <aggregate>count</aggregate>
+        <subject/>
+        <type>COUNT_ANY</type>
+        <valuefield/>
       </field>
     </fields>
     <attributes/>
@@ -562,14 +648,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>384</xloc>
-      <yloc>176</yloc>
+      <xloc>752</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Stream lookup</name>
-    <type>StreamLookup</type>
+    <name>Group by word</name>
+    <type>MemoryGroupBy</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -578,23 +664,23 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <from>stopwords</from>
-    <input_sorted>N</input_sorted>
-    <preserve_memory>Y</preserve_memory>
-    <sorted_list>N</sorted_list>
-    <integer_pair>N</integer_pair>
-    <lookup>
-      <key>
+    <give_back_row>N</give_back_row>
+    <group>
+      <field>
+        <name>id</name>
+      </field>
+      <field>
         <name>word</name>
-        <field>word</field>
-      </key>
-      <value>
-        <name>word</name>
-        <rename>stopword</rename>
-        <default>0</default>
-        <type>String</type>
-      </value>
-    </lookup>
+      </field>
+    </group>
+    <fields>
+      <field>
+        <aggregate>count</aggregate>
+        <subject/>
+        <type>COUNT_ANY</type>
+        <valuefield/>
+      </field>
+    </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -604,8 +690,72 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>256</xloc>
-      <yloc>176</yloc>
+      <xloc>752</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Split text to char</name>
+    <type>SplitFieldToRows3</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <splitfield>text</splitfield>
+    <delimiter/>
+    <newfield>ch</newfield>
+    <rownum>N</rownum>
+    <rownum_field/>
+    <resetrownumber>Y</resetrownumber>
+    <delimiter_is_regex>N</delimiter_is_regex>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>240</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Split text to word</name>
+    <type>SplitFieldToRows3</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <splitfield>text</splitfield>
+    <delimiter>[^a-zàâäçéèêëîïôöùûüÿ\-\']</delimiter>
+    <newfield>word</newfield>
+    <rownum>N</rownum>
+    <rownum_field/>
+    <resetrownumber>Y</resetrownumber>
+    <delimiter_is_regex>Y</delimiter_is_regex>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -628,22 +778,16 @@
     <ignore_flag_field/>
     <lookup>
       <schema/>
-      <table>doc_word</table>
+      <table>doc</table>
       <key>
-        <name>doc</name>
-        <field>doc</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>word</name>
-        <field>word</field>
+        <name>id</name>
+        <field>id</field>
         <condition>=</condition>
         <name2/>
       </key>
       <value>
-        <name>stopword</name>
-        <rename>stopword</rename>
+        <name>text</name>
+        <rename>text</rename>
       </value>
     </lookup>
     <attributes/>
@@ -655,13 +799,59 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>592</xloc>
-      <yloc>176</yloc>
+      <xloc>336</xloc>
+      <yloc>32</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>doc_word</name>
+    <name>ascii</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var ascii = ch.charCodeAt(0);
+
+</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>ascii</name>
+        <rename>ascii</rename>
+        <type>Integer</type>
+        <length>9</length>
+        <precision>0</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>608</xloc>
+      <yloc>240</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>db get html</name>
     <type>TableInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -673,10 +863,11 @@
     </partitioning>
     <connection>corpus</connection>
     <sql>SELECT
-  doc
-, word
-, count
-FROM doc_word
+  id
+, html
+
+FROM doc
+
 </sql>
     <limit>0</limit>
     <lookup/>
@@ -692,14 +883,14 @@ FROM doc_word
       </output>
     </remotesteps>
     <GUI>
-      <xloc>144</xloc>
-      <yloc>176</yloc>
+      <xloc>112</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>stopwords</name>
-    <type>CsvInput</type>
+    <name>doc_char</name>
+    <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -708,30 +899,39 @@ FROM doc_word
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>${Internal.Entry.Current.Directory}/stopword02.txt</filename>
-    <filename_field/>
-    <rownum_field/>
-    <include_filename>N</include_filename>
-    <separator>	</separator>
-    <enclosure>"</enclosure>
-    <header>N</header>
-    <buffer_size>50000</buffer_size>
-    <lazy_conversion>N</lazy_conversion>
-    <add_filename_result>N</add_filename_result>
-    <parallel>N</parallel>
-    <newline_possible>N</newline_possible>
-    <encoding>UTF-8</encoding>
+    <connection>corpus</connection>
+    <schema/>
+    <table>doc_char</table>
+    <commit>1000</commit>
+    <truncate>Y</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
     <fields>
       <field>
-        <name>word</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <column_name>doc</column_name>
+        <stream_name>id</stream_name>
+      </field>
+      <field>
+        <column_name>ch</column_name>
+        <stream_name>ch</stream_name>
+      </field>
+      <field>
+        <column_name>ascii</column_name>
+        <stream_name>ascii</stream_name>
+      </field>
+      <field>
+        <column_name>count</column_name>
+        <stream_name>count</stream_name>
       </field>
     </fields>
     <attributes/>
@@ -743,14 +943,14 @@ FROM doc_word
       </output>
     </remotesteps>
     <GUI>
-      <xloc>256</xloc>
-      <yloc>64</yloc>
+      <xloc>880</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Filter rows</name>
-    <type>FilterRows</type>
+    <name>doc_word</name>
+    <type>TableOutput</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -759,25 +959,37 @@ FROM doc_word
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <send_true_to/>
-    <send_false_to/>
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <leftvalue>stopword</leftvalue>
-        <function>&gt;</function>
-        <rightvalue/>
-        <value>
-          <name>constant</name>
-          <type>Integer</type>
-          <text>0</text>
-          <length>-1</length>
-          <precision>0</precision>
-          <isnull>N</isnull>
-          <mask>####0;-####0</mask>
-        </value>
-      </condition>
-    </compare>
+    <connection>corpus</connection>
+    <schema/>
+    <table>doc_word</table>
+    <commit>1000</commit>
+    <truncate>Y</truncate>
+    <ignore_errors>N</ignore_errors>
+    <use_batch>Y</use_batch>
+    <specify_fields>Y</specify_fields>
+    <partitioning_enabled>N</partitioning_enabled>
+    <partitioning_field/>
+    <partitioning_daily>N</partitioning_daily>
+    <partitioning_monthly>Y</partitioning_monthly>
+    <tablename_in_field>N</tablename_in_field>
+    <tablename_field/>
+    <tablename_in_table>Y</tablename_in_table>
+    <return_keys>N</return_keys>
+    <return_field/>
+    <fields>
+      <field>
+        <column_name>doc</column_name>
+        <stream_name>id</stream_name>
+      </field>
+      <field>
+        <column_name>word</column_name>
+        <stream_name>word</stream_name>
+      </field>
+      <field>
+        <column_name>count</column_name>
+        <stream_name>count</stream_name>
+      </field>
+    </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -787,8 +999,274 @@ FROM doc_word
       </output>
     </remotesteps>
     <GUI>
-      <xloc>496</xloc>
-      <yloc>176</yloc>
+      <xloc>880</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>html->text</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>
+var text = html
+
+		// Remove tag
+		.replace(/&lt;script[^>]*>([\S\s]*?)&lt;\/script>/gmi, '')
+		.replace(/&lt;style[^>]*>([\S\s]*?)&lt;\/style>/gmi, '')
+		.replace(/&lt;[^>]*>/gmi, '') 
+
+		// HTML mescape
+        .replace(/&amp;amp;/g, '&amp;')
+        .replace(/&amp;gt;/g,  '&lt;')
+        .replace(/&amp;quot;/g, '"')
+
+		// XML escape
+        .replace(/&amp;#39;/g,  "'")
+        .replace(/&amp;#169;/g, '©')
+        .replace(/&amp;#171;/g, '«')
+        .replace(/&amp;#176;/g, '°')
+        .replace(/&amp;#186;/g, 'º')
+        .replace(/&amp;#187;/g, '»')
+        .replace(/&amp;#192;/g, 'À')
+        .replace(/&amp;#194;/g, 'Â')
+        .replace(/&amp;#199;/g, 'Ç')
+        .replace(/&amp;#200;/g, 'È')
+        .replace(/&amp;#201;/g, 'É')
+        .replace(/&amp;#202;/g, 'Ê')
+        .replace(/&amp;#203;/g, 'Ë')
+        .replace(/&amp;#207;/g, 'Ï')
+        .replace(/&amp;#220;/g, 'Ü')
+        .replace(/&amp;#224;/g, 'à')
+        .replace(/&amp;#226;/g, 'â')
+        .replace(/&amp;#228;/g, 'ä')
+        .replace(/&amp;#231;/g, 'ç')
+        .replace(/&amp;#232;/g, 'è')
+        .replace(/&amp;#233;/g, 'é')
+        .replace(/&amp;#234;/g, 'ê')
+        .replace(/&amp;#235;/g, 'ë')
+        .replace(/&amp;#238;/g, 'î')
+        .replace(/&amp;#239;/g, 'ï')
+        .replace(/&amp;#243;/g, 'ó')
+        .replace(/&amp;#244;/g, 'ô')
+        .replace(/&amp;#249;/g, 'ù')
+        .replace(/&amp;#251;/g, 'û')
+        .replace(/&amp;#252;/g, 'ü')
+        .replace(/&amp;#255;/g, 'ÿ')
+
+		// Encoding
+		.replace(/Ã€/g, 'À')
+		.replace(/Ã‚/g, 'Â')
+		.replace(/Ã„/g, 'Ä')
+		.replace(/Ã‡/g, 'Ç')
+		.replace(/Ã‰/g, 'É')
+		.replace(/Ãˆ/g, 'È')
+		.replace(/ÃŠ/g, 'Ê')
+		.replace(/Ã‹/g, 'Ë')
+		.replace(/ÃŽ/g, 'Î')
+		.replace(/Ã”/g, 'Ô')
+		.replace(/Ã–/g, 'Ö')
+		.replace(/Ã™/g, 'Ù')
+		.replace(/Ã›/g, 'Û')
+		.replace(/Ãœ/g, 'Ü')
+		.replace(/Å¸/g, 'Ÿ')
+		.replace(/Ã /g, 'à')
+		.replace(/Ã¢/g, 'â')
+		.replace(/Ã¤/g, 'ä')
+		.replace(/Ã§/g, 'ç')
+		.replace(/Ã©/g, 'é')
+		.replace(/Ã¨/g, 'è')
+		.replace(/Ãª/g, 'ê')
+		.replace(/Ã«/g, 'ë')
+		.replace(/Ã®/g, 'î')
+		.replace(/Ã¯/g, 'ï')
+		.replace(/Ã´/g, 'ô')
+		.replace(/Ã¶/g, 'ö')
+		.replace(/Ã¹/g, 'ù')
+		.replace(/Ã»/g, 'û')
+		.replace(/Ã¼/g, 'ü')
+		.replace(/Ã¿/g, 'ÿ')
+
+        // Apostrophes
+		.replace(/’/g, "' ")
+		.replace(/‘/g, "' ")
+		.replace(/`/g, "' ")
+		.replace(/'/g, "' ")
+		.replace(/main-d'\s+oeuvre/g, "main-d' oeuvre")
+		.replace(/main-d'\s+uvre/g, "main-d' oeuvre")
+
+        // Trait d'union
+		.replace(/--/g,    ' - ')
+		.replace(/-t-/g,   ' t ')
+		.replace(/a-telle/g,   'a t elle')
+		.replace(/-ce/g,   ' ce')
+		.replace(/-ci/g,   ' ci')
+		.replace(/-les/g,  ' les')
+		.replace(/-il/g,   ' il')
+		.replace(/-elle/g, ' elle')
+		.replace(/-on/g,   ' on')
+		.replace(/-même/g, ' même')
+		.replace(/-vous/g, ' vous').replace(/rendez vous/g, 'rendez-vous')
+		.replace(/-nous/g, ' nous')
+
+
+
+//text = text.toLowerCase();</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>text</name>
+        <rename>text</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>224</xloc>
+      <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>orthographe</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>/*
+text = text
+		.replace(/activejusqu'/, 'active jusqu\'')
+		.replace(/danoisjouant/, 'danois jouant')
+		.replace(/régionalexpress/, 'régional express')
+		.replace(/höpitaux/, 'hôpitaux')
+		.replace(/libérauxradicaux/, 'libéral-radical')
+		.replace(/procèsverbaux/, 'procès verbaux')
+		.replace(/flôpitaux/, 'hôpitaux')
+		.replace(/droitsfondamentaux/, 'droits fondamentaux')
+		.replace(/hoptiaux/, 'hôpitaux')
+		.replace(/reseaux/, 'réseaux')
+		.replace(/lesjournaux/, 'les journaux')
+		.replace(/médiaux/, 'médicaux')
+		.replace(/medicaux/, 'médicaux')
+
+		.replace(/journee-proches-aidants/g, 'journée proches aidants') 
+		.replace(/grandsparents/g, 'grand-parent')
+		.replace(/petitsenfants/g, 'petit-enfant')
+		.replace(/quejamais/g, 'que jamais')
+		.replace(/auxjeunes/g, 'aux jeunes')
+		.replace(/médecins-chefs/g, 'médecins chefs')
+		.replace(/hommes-femmes/g, 'hommes femmes')
+		.replace(/prochesaidants/g, 'proches aidants')
+		.replace(/seances/g, 'séances')
+		.replace(/contrats-types/g, 'contrat types')
+		.replace(/pa-tients/g, 'patients')
+		.replace(/elections/g, 'élections')
+		.replace(/invoquentils/g, 'invoquent-ils')
+		.replace(/praille-acacias-vernets/g, 'praille acacias vernets')
+		.replace(/chauxde-fonds/g, 'chaud-de-fonds')
+		.replace(/arguments-clés/g, 'arguments clés')
+		.replace(/echichens/g, 'échichens')
+		.replace(/ecoles/g, 'écoles')
+		.replace(/quelquesuns/g, 'quelques uns')
+		.replace(/nouveauxjeunes/g, 'nouveaux jeunes')
+		.replace(/puidoux-chexbres/g, 'puidoux chexbres')
+		.replace(/genève-cliniques/g, 'genève cliniques')
+		.replace(/uvres/g, 'oeuvres')
+		.replace(/-mais/g, 'mais')
+		.replace(/timetables-and-fares/g, 'timetable and fares')
+		.replace(/cinqjours/g, 'cinq jours')
+		.replace(/médecins-assistants/g, 'médecins assistants')
+		.replace(/enquete-publique-mes-observations/g, 'enquête publique mes observations')
+		.replace(/lesjournalistes/g, 'les journalistes')
+		.replace(/äges/g, 'âgés')
+		.replace(/ägees/g, 'âgées')
+		.replace(/agees/g, 'âgées')
+		.replace(/espaceproches/g, 'espace proches')
+		.replace(/petits-cousins/g, 'petits cousins')
+		.replace(/genève-lac-nations/g, 'genève lac nations')
+		.replace(/redcross/g, 'croix-rouge')
+		.replace(/genève-eaux-vives/g, 'genève eaux vive')
+		.replace(/impactéesdans/g, 'impactées dans')
+		.replace(/coüts/g, 'coûts')
+		.replace(/idees-debats/g, 'idées debats')
+		.replace(/cians/g, 'dans')
+		.replace(/lahaussedes/g, 'la hausse de')
+		.replace(/saint-jean-charmilles/g, 'saint-jean charmilles')
+		.replace(/àdes/g, 'à des')
+		.replace(/fédéraies/g, 'fédérales')
+		.replace(/bachet-palettes/g, 'bachet palettes')
+		.replace(/s-aidants/g, 'aidants')
+		.replace(/prix-entreprise-salariesaidants/g, 'prix entreprise salaries aidants')
+		.replace(/sagesfemmes/g, 'sage-femme')
+		.replace(/materiel-et-dossiers/g, 'materiel et dossiers')
+		.replace(/psvaudois/g, 'ps vaudois')
+		.replace(/temmes/g, 'termes')
+		.replace(/noustoutes/g, 'nous toutes')
+		.replace(/desormais/g, 'désormais')
+		.replace(/novartis-ipsos/g, 'novartis ipsos')
+		.replace(/pro-grammes/g, 'programmes')
+		.replace(/assurerses/g, 'assurer ses')
+		.replace(/procheaidants/g, 'procheaidants')
+		.replace(/keystone-ats/g, 'keystone ats')
+*/</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>text</name>
+        <rename>text</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>Y</replace>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>336</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
