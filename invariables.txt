@@ -1,0 +1,311 @@
+suisse	Suisse
+genève	Genève
+devaux	Devaux
+delvaux	Delveaux
+lavaux	Lavaux
+birraux	Birraux
+margaux	Margaux
+froidevaux	Froidevaux
+fin-du-craux	Fin-du-Craux
+mettraux	Mettraux
+birraux	Birraux
+alex	Alex
+botox	Botox
+xanax	Xanax
+ploux	Ploux
+sitex	Sitex
+felix	Félix
+félix	Félix
+chemex	Chemex
+leroux	Leroux
+spitex	Spitex
+harvix	Harvix
+thônex	Thônex
+carb-x	Carb-x
+bernex	Bernex
+puidox	Puidox
+founex	Founex
+firefox	Firefox
+chernex	Chernex
+versoix	Versoix
+infobox	Infobox
+phoenix	Phoenix
+ruffieux	Ruffieux
+failloux	Failloux
+amphimax	Amphimax
+colovrex	Colovrex
+montreux	Montreux
+vieusseux	Vieusseux
+jean-félix	Jean-Félix
+geneux	Geneux
+bns	Bns
+bms	Bms
+crs	Crs
+kbs	Kbs
+béatrice	Béatrice
+patrice	Patrice
+lement	Léman
+alterum	Alterum
+gruyère	Gruyère
+paychère	Paychère
+ecolive	Ecolive
+de-candolle	De-Candolle
+bolle	Bolle
+grenelle	Grenelle
+kaenel	Kaenel
+lionel	Lionel
+cheynel	Cheynel
+bläsi	Bläsi
+nägeli	Nägeli
+hänggeli	Hänggeli
+kälin	Kälin
+häusermann	Häusermann
+rändele	Rändele
+pfäffikon	Pfäffikon
+glättli	Glättli
+bärtschi	Bärtschi
+kämpfen	Kämpfen
+joël	Joël
+raphaël	Raphaël
+noël	Noël
+erguël	Erguël
+assaël	Assaël
+gwenaëlle	Gwenaëlle
+joëlle	Joëlle
+israël	Israël
+maëva	Maëva
+michaël	Michaël
+gaëtan	Gaëtan
+dubaï	Dubaï
+aïna	Aïna
+loïc	Loïc
+caraïbes	Caraibes
+ïazchams	Iazchams
+thaïlande	Thaïlande
+patïmansour	Fati Mansour
+taïwan	Taïwan
+syiviareveïio	Syivia Revello
+stöckli	stöckli
+köppel	köppel
+pöschwies	pöschwies
+dübi	Dübi
+lüscher	Lüscher
+rühl	Rühl
+wüthrich	Wüthrich
+bassersdorf-nürensdorf-brütten	Bassersdorf Nürensdorf Brütten
+jürg	Jürg
+zünd	Zünd
+flückiger	Flückiger
+zürich	Zürich
+müller	Müller
+bühlmann	Bühlmann
+brechbühl	Brechbühl
+stückelberger	Stückelberger
+küssnacht	Küssnacht
+rüttimann	Rüttimann
+hürlimann	Hürlimann
+knüsel	Knüsel
+deblüe	Deblüe
+lüneburg	Lüneburg
+züllig-landolt	Züllig-landolt
+sylviareveüo	Sylvia Revello
+sanalepsi	Saneepsi
+sanchez	Sanchez
+santésuisse	SantéSuisse
+abensur	Abensur
+pierre	Pierre
+abb	ABB
+abi	ABI
+abilis	Abilis
+zünd	Zünd
+
+
+alberto
+aes
+agnes
+agnès
+alexis
+allières
+amphimax
+andréas
+annals
+apparatus
+aross
+artias
+ats
+audiens
+avalems
+babayagas
+balkans
+bamilékés
+bardonnex
+baucis
+bees
+beps
+bernex
+boris
+botox
+brico-loisirs
+brisebois
+broulis
+bruxelles
+bs
+carb-x
+cassandres
+cds
+cgas
+chablais
+chappuis
+charles
+charmilles
+chaux-de-fonds
+chemex
+chexbres
+chris
+chêne-bougeries
+cktcndeux
+climeworks
+cms
+colovrex
+compenswiss
+corcelles
+cossardeaux
+crastes
+crs
+css
+curabilis
+cyclades
+davos
+dennis
+descuves
+despentes
+dimitrios
+doris
+doubs
+ds
+dsas
+dses
+dubois
+dubuis
+démétriadès
+déplus
+e-liquides
+eats
+eaux-vives
+efas
+emirats
+epeisses
+espas
+evans
+extremis
+fares
+fin-du-craux
+focus
+franches-montagnes
+franziskakis
+frauenhaus
+freitas
+fribourgeois
+galaxus
+geneux
+genève-eaux-vives
+georges
+glis
+gouilhers
+grangettes
+hanslucas
+https
+ieds
+imad-gex
+infirmis
+inès
+ipsos
+iqos
+jean-charles
+jean-françois
+jean-félix
+jean-jacques
+jean-jaurès
+jean-louis
+kitsos
+klaus
+kraus
+langerhans
+lesechos
+londres
+louis-georges
+lpers
+lémanis
+maas
+mads
+mans
+marinos
+markus
+matthias
+melectronics
+mettraux
+morges
+morris
+neuhaus
+nicolas
+novartis
+ofas
+onas
+onex
+orbis
+ores
+paleyres
+palézieux
+pass
+païdos
+perly-certoux
+pidoux
+pierre-yves
+plainpalais
+planés
+ploux
+pluss
+poitiers
+ps
+puidoux
+pöschwies
+rausis
+reducedrisks
+regioexpress
+renens
+rhodes-intérieures
+ribbers
+rolex
+ruffieux
+saint-gervais
+saint-julien-en-genevois
+sainte-croix
+senarclens
+serenitas
+sitex
+sophiedavaris
+sottas
+swis
+swiss
+swisspass
+tattes
+tay-sachs
+tedros
+tens
+thies
+thwaites
+thônex
+titus
+triptans
+uranais
+val-de-travers
+vegas
+veledes
+vernes
+versoix
+veyras
+vs
+vuadens
+wallis
+yaedes
+zisyadis
