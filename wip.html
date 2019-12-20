@@ -1,0 +1,170 @@
+<meta charset="utf-8">
+
+<style>
+	select { width: 100%; }
+	iframe { width: 100%; }
+</style>
+
+<script>
+var directory = 'data';
+var docs = [];
+
+getData = function(path){
+	var x = new XMLHttpRequest();
+	x.open("GET", path, false);
+	x.overrideMimeType("text/plain");
+	x.onload = function() {
+		var subdir = [];
+		for(var line of x.response.split(/\r?\n/)){
+			var file = line.split(' ');
+			if(file[0]=='201:'){
+				if(file[4]=='DIRECTORY')
+					getData(path+'/'+decodeURIComponent(file[1]));
+				if(file[4]=='FILE')
+					docs.push({
+						taxon: path.replace(new RegExp('^'+directory+'/'), ''), 
+						file: decodeURIComponent(file[1])
+					});
+			}
+		}
+	}
+	x.send();
+}
+
+
+bagOfWords = function(doc){
+	var path = directory+'/'+doc.taxon+'/'+doc.file;
+	console.log(path);
+	var x = new XMLHttpRequest();
+	x.open("GET", path);
+	x.overrideMimeType("text/plain");
+	x.onload = function(){
+		var text = cleanup(x.response.toLowerCase())
+
+					// Remove tag
+					.replace(/<script[^>]*>([\S\s]*?)<\/script>/gmi, '')
+					.replace(/<style[^>]*>([\S\s]*?)<\/style>/gmi, '')
+					.replace(/<[^>]*>/gmi, '') 
+
+					// HTML mescape
+					.replace(/&amp;/g, '&')
+					.replace(/&gt;/g,  '<')
+					.replace(/&quot;/g, '"')
+
+					// XML escape
+					.replace(/&#39;/g,  "'")
+					.replace(/&#169;/g, '©')
+					.replace(/&#171;/g, '«')
+					.replace(/&#176;/g, '°')
+					.replace(/&#186;/g, 'º')
+					.replace(/&#187;/g, '»')
+					.replace(/&#192;/g, 'À')
+					.replace(/&#194;/g, 'Â')
+					.replace(/&#199;/g, 'Ç')
+					.replace(/&#200;/g, 'È')
+					.replace(/&#201;/g, 'É')
+					.replace(/&#202;/g, 'Ê')
+					.replace(/&#203;/g, 'Ë')
+					.replace(/&#207;/g, 'Ï')
+					.replace(/&#220;/g, 'Ü')
+					.replace(/&#224;/g, 'à')
+					.replace(/&#226;/g, 'â')
+					.replace(/&#228;/g, 'ä')
+					.replace(/&#231;/g, 'ç')
+					.replace(/&#232;/g, 'è')
+					.replace(/&#233;/g, 'é')
+					.replace(/&#234;/g, 'ê')
+					.replace(/&#235;/g, 'ë')
+					.replace(/&#238;/g, 'î')
+					.replace(/&#239;/g, 'ï')
+					.replace(/&#243;/g, 'ó')
+					.replace(/&#244;/g, 'ô')
+					.replace(/&#249;/g, 'ù')
+					.replace(/&#251;/g, 'û')
+					.replace(/&#252;/g, 'ü')
+					.replace(/&#255;/g, 'ÿ')
+
+					// Encoding
+					.replace(/Ã€/g, 'À')
+					.replace(/Ã‚/g, 'Â')
+					.replace(/Ã„/g, 'Ä')
+					.replace(/Ã‡/g, 'Ç')
+					.replace(/Ã‰/g, 'É')
+					.replace(/Ãˆ/g, 'È')
+					.replace(/ÃŠ/g, 'Ê')
+					.replace(/Ã‹/g, 'Ë')
+					.replace(/ÃŽ/g, 'Î')
+					.replace(/Ã”/g, 'Ô')
+					.replace(/Ã–/g, 'Ö')
+					.replace(/Ã™/g, 'Ù')
+					.replace(/Ã›/g, 'Û')
+					.replace(/Ãœ/g, 'Ü')
+					.replace(/Å¸/g, 'Ÿ')
+					.replace(/Ã /g, 'à')
+					.replace(/Ã¢/g, 'â')
+					.replace(/Ã¤/g, 'ä')
+					.replace(/Ã§/g, 'ç')
+					.replace(/Ã©/g, 'é')
+					.replace(/Ã¨/g, 'è')
+					.replace(/Ãª/g, 'ê')
+					.replace(/Ã«/g, 'ë')
+					.replace(/Ã®/g, 'î')
+					.replace(/Ã¯/g, 'ï')
+					.replace(/Ã´/g, 'ô')
+					.replace(/Ã¶/g, 'ö')
+					.replace(/Ã¹/g, 'ù')
+					.replace(/Ã»/g, 'û')
+					.replace(/Ã¼/g, 'ü')
+					.replace(/Ã¿/g, 'ÿ')
+
+					// Apostrophes
+					.replace(/’/g, "' ")
+					.replace(/‘/g, "' ")
+					.replace(/`/g, "' ")
+					.replace(/'/g, "' ")
+
+	}
+	x.send();
+}
+
+
+
+setTaxon = function(taxons){
+	for(var i=0; i<taxons.length; i++)
+		if(taxons.indexOf(taxons[i])==i)
+			document.querySelector('#taxon').innerHTML += '<input type="checkbox" oninput="searchTaxon(this.value)" value="'+taxons[i]+'">'+taxons[i]+'<br>';
+}
+
+searchTaxon = function(taxon){
+	document.querySelector('#docs').innerHTML = '';
+	for(var doc of docs)
+		if(document.querySelector('#taxon input[value="'+doc.taxon+'"]').checked)
+			//TODO remove file extension
+			document.querySelector('#docs').innerHTML += '<option value="'+directory+'/'+doc.taxon+'/'+doc.file+'">'+doc.taxon+' - '+doc.file+'</option>';
+}
+searchDoc = function(doc) {
+	document.querySelector('iframe').src = doc;
+}
+
+showDoc = function(iframe){
+	for(var img of iframe.contentDocument.body.querySelectorAll('img'))
+		img.style.display = 'none';
+	iframe.contentDocument.body.style.fontFamily = 'sans-serif';
+}
+
+
+onload = function(){
+	document.querySelector('iframe').src = '';
+	getData(directory);
+	setTaxon(docs.map(function(x) {return x.taxon}));
+	for(var doc of docs)
+		bagOfWords(doc);
+}
+</script>
+
+<body>
+	<div id="taxon"></div>
+	<select id="docs" size="8" oninput="searchDoc(this.value)"></select>
+	<br>
+	<iframe id="text" style="min-height:98vh" onload="showDoc(this)"></iframe>
+</body>
