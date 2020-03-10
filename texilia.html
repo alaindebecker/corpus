@@ -1,0 +1,157 @@
+<meta charset="utf-8">
+
+<style>
+	* {box-sizing: border-box}
+	body { font-family: sans-serif;}
+
+	nav { float: left; width: 30%; height: 100%; border: 1px solid #ccc; background-color: #f1f1f1; }
+	nav > div { width: 100%; padding: 1.2em 1em; font-size: 17px; cursor: default; transition: 0.3s; }
+	nav > div:hover { background-color: #ddd; }
+	nav > div[active] { background-color: #ccc; }
+	nav div[disabled] { color: grey; }
+
+	main { float: left; width: 70%; height: 100%; padding: 0px 1em; border: 1px solid #ccc; border-left: none; }
+	
+	main div { position: relative; width: 100%; }
+	main input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+	main button { position: absolute; right: 0; padding: 7.5px 8px; border: 1px solid #ccc; border-radius: 4px; }
+	main summary { font-size: small; margin-top: 1em; }
+	
+	main input[type="file"] { display: none; }
+	
+	main table { padding: 8px; font-size: small; }
+	main table td, th { min-width: 100px; text-align: center; }
+	main table td:first-child, th:first-child { text-align: left ;}
+	main table td:last-child, th:last-child { text-align: right ;}
+</style>
+
+<!--script src="minisearch.js"></script-->
+<script src="https://cdn.jsdelivr.net/npm/minisearch@2.1.4/dist/minisearch.min.js"></script>
+<script>
+var minisearch = new MiniSearch({
+	fields: ['title', 'text'],
+	storeFields: ['title', 'path', , 'date', 'type', 'size']
+})
+var offset = 0
+var limit = 20
+
+
+search = function(str){
+	document.querySelector('#recherche table tbody').innerHTML = ''
+	var result = minisearch.search(str)
+	document.querySelector('#recherche h4').innerHTML = result.length+' documents'
+	var table = ''
+	for(var i=offset; i<=offset+limit; i++){
+		var size = Number(result[i].size)
+		if(size>1024*1024) size = Math.round(size/1024/1024)+' Go'
+		if(size>1024) size = Math.round(size/1024)+' Ko'
+		table += '<tr><td><a href="'+result[i].path+'" target="_blanc">'+result[i].title+'</a></td><td>'+result[i].date+'</td><td>'+result[i].type+'</td><td>'+size+'</td></tr>'
+	}
+	document.querySelector('#recherche table tbody').innerHTML = table
+}
+
+
+loadFile = function(file){
+	var reader = new FileReader()
+	reader.onload = function(){
+		var doc = {}
+		doc.id = minisearch.documentCount+1
+		doc.text = reader.result
+								.replace(/<script.*?>.*?<\/script>/igm, '')
+								.replace(/<style.*?>.*?<\/style>/igm, '')
+								.replace(/<[^>]*>/igm, '')
+								.replace(/\s+/igm, ' ')
+		doc.title = file.name.substring(0, file.name.lastIndexOf('.'))
+		doc.date = new Date(file.lastModified).toISOString().substring(0,16).replace(/T/i, ' ')
+		doc.size = Number(file.size)
+		doc.type = file.type
+		doc.path = '../'+file.webkitRelativePath
+		minisearch.add(doc)
+	}
+	reader.readAsText(file)
+}
+
+loadCorpus = function(event){
+	var table = ''
+	for(var file of event.target.files){
+		var name = file.name.substring(0, file.name.lastIndexOf('.'))
+		var date = new Date(file.lastModified).toISOString().substring(0,16).replace(/T/i, ' ')
+		var type = file.type
+		var path = file.webkitRelativePath
+		var size = Number(file.size)
+		if(size>1024*1024) size = Math.round(size/1024/1024)+' Go'
+		if(size>1024) size = Math.round(size/1024)+' Ko'
+
+		table += '<tr><td>'+name+'</td><td>'+date+'</td><td>'+type+'</td><td>'+size+'</td></tr>'
+		loadFile(file)
+	}
+	event.target.parentElement.parentElement.querySelector('table tbody').innerHTML = table
+}
+
+openTab = function (event, tabName) {
+	for(var tab of document.querySelectorAll('main > div'))
+		tab.style.display = 'none';
+	for(var tab of document.querySelectorAll('nav > div'))
+		tab.removeAttribute('active');
+	document.getElementById(tabName).style.display = 'block'
+	event.currentTarget.setAttribute('active', 'active')
+}
+</script>
+
+
+
+<body>
+	<h1>Nom du logiciel</h1>
+
+	<nav>
+		<div onclick="openTab(event, 'recherche')">Recherche</div>
+		<div onclick="openTab(event, 'corpus')" id="defaultTab">Corpus</div>
+		<div onclick="openTab(event, 'stopwords')" disabled>Mots vides</div>
+		<div onclick="openTab(event, 'rules')" disabled>Règles</div>
+	</nav>
+
+	<main>
+		<div id="recherche">
+			<h3>Recherche</h3>
+			<div>
+				<input placeholder="Recherche..." onkeyup="if(event.key=='Enter') search(value)">
+				<button onclick="search(previousElementSibling.value)">&#x1f50d;&#xFE0E;</button>
+			</div>
+			<details>
+				<summary>Options</summary>
+			</details>
+			<h4></h4>
+			<table>
+				<thead><tr><th>Nom</th><th>Modifié le</th><th>Type</th><th>Taille</th></tr></thead>
+				<tbody></tbody>
+			</table>
+
+		</div>
+
+		<div id="corpus">
+			<h3>Corpus</h3>
+			<div>
+				<input type="file" webkitdirectory multiple onchange="loadCorpus(event)">
+				<input placeholder="Fichiers..." onclick="previousElementSibling.click()" onkeydown="previousElementSibling.click()">
+				<button onclick="previousElementSibling.click()">&#x1f50d;&#xFE0E;</button>
+			</div>
+			<table>
+				<thead><tr><th>Nom</th><th>Modifié le</th><th>Type</th><th>Taille</th></tr></thead>
+				<tbody></tbody>
+			</table>
+		</div>
+
+		<div id="stopwords">
+			<h3>Mots vides</h3>
+			En cours d'implémentation
+		</div>
+
+		<div id="rules">
+			<h3>Règles</h3>
+			En cours d'implémentation
+		</div>
+	</main>
+<script>
+document.getElementById("defaultTab").click();
+</script>
+</body>
