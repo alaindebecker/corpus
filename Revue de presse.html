@@ -1,0 +1,96 @@
+<title>Revue de presse</title>
+
+<style>
+* { font-family: sans-serif; }
+</style>
+
+<script>
+var rubriques = ["Maintien et soins à domicile, EMS", "Santé & social", "Economie & politique", "Recherche & innovation", "A Genève", "Mobilité", "Mentions IMAD", "Développement durable et RSE", "Management et formation"]
+
+var x = new XMLHttpRequest()
+x.open('get','Revue de presse.csv')
+x.overrideMimeType("text/plain; charset=ISO-8859-1");
+x.onload = function(event){
+	data = []
+
+	var rubrique = '';
+	var date = '';
+	var titre = ''
+	var ocr = ''
+	var pdf = ''
+	var web = ''
+	
+	// Read data
+	for(var line of x.response.split('\n')){
+	
+		// The first non blanc line after
+		if(!titre && line.match(/\S/)){
+			titre = line.replace(/<[^>]*>/g, '')
+		}
+
+		var regex = line.match(/^(\d\d)\.(\d\d)\.(\d\d\d\d)/);
+		if(regex)
+			date = regex[3]+'-'+regex[2]+'-'+regex[1];
+
+		for(var r of rubriques){
+			regex = line.match(new RegExp('^('+r+')\\s*\(\\d*\)'))
+			if(regex)
+				rubrique = regex[1].trim()
+		}
+
+		regex = line.match(/pdf\s*<(http[^>]*)/)
+		if(regex){
+			titre = null
+			pdf = regex[1]
+			ocr = pdf
+		}
+		regex = line.match(/web\s*<(http[^>]*)/)
+		if(regex){
+			titre = null
+			web = regex[1]
+			ocr = web
+		}
+		
+		regex = line.match(/ocr\s*<(http[^>]*)/)
+		if(regex){
+			titre = null
+			ocr = regex[1]
+		}
+
+		if(date && rubrique && ocr && titre){
+			data.push({date: date, rubrique: rubrique, titre: titre.trim(), ocr: ocr, web: web})
+			date = null
+			ocr = null
+			titre = null
+		}
+	} // Data read
+	data.sort(function(x,y){
+		if(x.rubrique < y.rubrique)
+			return -1
+		if(x.rubrique > y.rubrique)
+			return 1
+		if(x.date > y.date)
+			return -1
+		if(x.date < y.date)
+			return 1
+		if(x.titre < y.titre)
+			return -1
+		if(x.titre > y.titre)
+			return 1
+		return 0
+	})
+	// Write html
+	var rubrique = ''
+	document.write('<title>Revue de presse</title><style>*{font-family:sans-serif;}</style>')
+
+	for(var p of data){
+		if(rubrique!=p.rubrique){
+			if(rubrique) document.write('</ul></details>')
+			document.write('<details><summary>'+p.rubrique+'</summary><ul>')
+			rubrique = p.rubrique
+		}
+		document.write('<li>'+p.date+' <a href="'+p.ocr+'" target="_blank" download="t.html">'+p.titre+'</a><br>')
+	}
+}
+x.send()
+</script>
